@@ -21,7 +21,44 @@ mongoose
   })
   .then(() => {
     // Run your code here, after you have insured that the connection was made
+  
+    // Iteration 2 - Create a recipe
+    Recipe.create({
+      title: 'Tiramisu',
+      level: 'Easy Peasy',
+      ingredients: ['eggs', 'sugar', 'mascarpone', 'coffee', 'biscuits'],
+      cuisine: 'Michaela',
+      dishType: 'dessert',
+      image: 'https://zitzivot.cz/wp-content/uploads/tiramisu.jpg',
+    })
+    .then((data) => {
+      console.log(data.title);
+    })
+
+    //Iteration 3 - Insert multiple recipes
+    Recipe.insertMany(data)
+    .then((displayTitles) => {
+      displayTitles.forEach((recipe) => {
+        console.log(recipe.title);
+      })
+    })
+    // db.recipes.find({}, {title: 1, _id: 0})
+
+    // Iteraton 4 - Update recipe
+    Recipe.findOneAndUpdate( { title: "Rigatoni alla Genovese" }, { duration: 100 } , { new: true })
+    .then(() => {
+      console.log("Successfully updated Rigatoni.")})
+    
+    // Iteration 5 - Remove a recipe
+    Recipe.deleteOne( { title: "Carrot Cake" } )
+    .then(() => {
+      console.log("Carrot Cake deleted.")
+    })
+
+    // Iteration 6 - Close the Database
+    mongoose.connection.close()
   })
+
   .catch(error => {
     console.error('Error connecting to the database', error);
   });
